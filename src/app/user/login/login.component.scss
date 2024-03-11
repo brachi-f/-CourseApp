@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+    /* Ensures the form is centered vertically */
+}
+
+.form {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+.form-card{
+
+}
+.form>* {
+    margin-bottom: 20px;
+    /* Add spacing between form elements */
+}
+
+.field {
+    width: 100%;
+}
+.form-wrap{
+    padding: 60px 10px;
+}

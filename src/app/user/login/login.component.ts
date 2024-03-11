@@ -1,13 +1,27 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatButtonModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -19,9 +33,9 @@ export class LoginComponent {
       password: new FormControl("", [Validators.required])
     })
   }
-  Login() {
-    this._userService.loginUser(this.loginForm.value['name'],this.loginForm.value['password']).subscribe({
-      next:(res)=>{
+  login() {
+    this._userService.loginUser(this.loginForm.value['name'], this.loginForm.value['password']).subscribe({
+      next: (res) => {
         localStorage.setItem("user", JSON.stringify(res));
         Swal.fire({
           icon: 'success',
@@ -31,7 +45,7 @@ export class LoginComponent {
         });
         this._router.navigate(['home']);
       },
-       error:(err)=>{
+      error: (err) => {
         Swal.fire({
           icon: 'error',
           title: err.message,
@@ -39,7 +53,7 @@ export class LoginComponent {
           timer: 1500
         });
       }
-  });
+    });
   }
-  constructor(private _userService:UserService, private _router:Router){}
+  constructor(private _userService: UserService, private _router: Router) { }
 }
