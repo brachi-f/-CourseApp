@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="clickUser()">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <span>{{user?user.name: "להתחברות"}}</span>
+    <span class="example-spacer"></span>
+    @if(user){
+        <button mat-button>הקורסים שלי</button>
+        <button mat-button>צפייה בקורסים</button>
+    }
+    @else {
+        <button mat-button>הרשמה</button>
+        <button mat-button>התחברות</button>
+    }
+    <button mat-button>עמוד הבית</button>
+</mat-toolbar>
