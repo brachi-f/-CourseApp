@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
@@ -6,9 +6,9 @@ import { UserDetailsComponent } from '../user-details/user-details.component';
 import { NotFoundComponent } from '../../pages/not-found/not-found.component';
 
 const userRoutes: Routes = [
-  { path: "", redirectTo: "home", pathMatch: 'full' },
+  // { path: '', redirectTo: "home", pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: "user", component: UserDetailsComponent },
+  { path: "update", component: UserDetailsComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
@@ -19,4 +19,7 @@ const userRoutes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class UserRoutingModule { }
+export class UserRoutingModule{
+
+  
+}

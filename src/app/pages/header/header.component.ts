@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
   clickUser(): void {
     if (!this.user)
-      this._route.navigate(['/login']);
+      this._route.navigate(['/user/login']);
     else
       this._route.navigate(['/user']);
 
