@@ -1,9 +1,8 @@
 <p>login</p>
 <div class="container">
-    <!-- <div class="form-card"> -->
-    <!--    <div class="card-body"> -->
     <mat-card class="form-wrap">
         <form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
+            
             <mat-form-field class="field" appearance="fill">
                 <mat-label>שם משתמש</mat-label>
                 <input matInput formControlName="name">
@@ -16,9 +15,7 @@
                 <mat-icon matSuffix>lock_sharp</mat-icon>
             </mat-form-field>
             <br>
-            <button mat-raised-button color="primary" type="submit">התחברות</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">התחברות</button>
         </form>
     </mat-card>
-    <!-- </div> -->
-    <!--  </div> -->
 </div>

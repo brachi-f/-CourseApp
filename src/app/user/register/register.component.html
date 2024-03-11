@@ -1,1 +1,75 @@
-<p>register works!</p>
+<div class="container">
+    <mat-card class="form-wrap">
+        <form class="form" [formGroup]="signinUser" (ngSubmit)="register()">
+            <div class="form-row">
+                <div class="form-field">
+                    <mat-form-field appearance="fill">
+                        <mat-label>שם משתמש</mat-label>
+                        <input matInput formControlName="name">
+                        <mat-icon matSuffix>person_sharp</mat-icon>
+                        @if(signinUser.get('name')?.invalid && (signinUser.get('name')?.dirty ||
+                        signinUser.get('name')?.touched)){
+                        <mat-hint>זהו שדה חובה</mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="form-field">
+                    <mat-form-field appearance="fill">
+                        <mat-label>כתובת</mat-label>
+                        <input matInput formControlName="address">
+                        <mat-icon matSuffix>home</mat-icon>
+                        @if(signinUser.get('address')?.invalid && (signinUser.get('address')?.dirty ||
+                        signinUser.get('address')?.touched)){
+                        <mat-hint>זהו שדה חובה</mat-hint>}
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <mat-form-field appearance="fill">
+                        <mat-label>אימייל</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-icon matSuffix>mail</mat-icon>
+                        @if(signinUser.get('email')?.invalid && (signinUser.get('email')?.dirty ||
+                        signinUser.get('email')?.touched)){
+                        <mat-hint>
+                            {{ signinUser.get('email')?.hasError('required') ? 'זהו שדה חובה' :
+                            'הכנס כתובת אימייל חוקית' }}
+                        </mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="form-field">
+                    <mat-form-field appearance="fill">
+                        <mat-label>סיסמא</mat-label>
+                        <input matInput formControlName="password">
+                        <mat-icon matSuffix>lock_sharp</mat-icon>
+                        @if(signinUser.get('password')?.invalid && (signinUser.get('password')?.dirty ||
+                        signinUser.get('password')?.touched)){
+                        <mat-hint>זהו שדה חובה</mat-hint>}
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <mat-form-field appearance="fill">
+                        <mat-label>תפקיד</mat-label>
+                        <mat-select formControlName="role">
+                            <mat-option value="lecturer">מרצה</mat-option>
+                            <mat-option value="student">סטודנט</mat-option>
+                        </mat-select>
+                        <mat-icon matSuffix>group</mat-icon>
+                        @if(signinUser.get('role')?.invalid && (signinUser.get('role')?.dirty ||
+                        signinUser.get('role')?.touched)){
+                        <mat-hint>חובה לבחור תפקיד</mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <br>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!signinUser.valid">הרשמה</button>
+        </form>
+    </mat-card>
+</div>

@@ -7,6 +7,9 @@
     @if(user){
     <button mat-button>הקורסים שלי</button>
     <button mat-button>צפייה בקורסים</button>
+    @if(user.role == 1){
+    <button mat-button>הוספת קורס</button>
+    }
     }
     @else {
     <button mat-button routerLink="/user/register" routerLinkActive="active">הרשמה</button>
