@@ -23,7 +23,7 @@ export class UserService {
   setUser(value: User | null): void {
     this.userLogged = value? value : undefined;
     if (typeof window !== 'undefined')
-          localStorage.setItem("user", JSON.stringify(value));
+          sessionStorage.setItem("user", JSON.stringify(value));
   }
 
   loginUser(username: string, password: string): Observable<User> {
