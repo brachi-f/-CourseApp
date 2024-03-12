@@ -1,12 +1,14 @@
 import { Category } from './../../Entities/Caregory.model';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Course } from '../../Entities/Course.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { } from '@angular/material';
 import { User } from '../../Entities/User.model';
+import { CourseService } from '../course.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'course-details',
@@ -20,9 +22,28 @@ import { User } from '../../Entities/User.model';
   templateUrl: './course-details.component.html',
   styleUrl: './course-details.component.scss'
 })
-export class CourseDetailsComponent {
+export class CourseDetailsComponent implements OnInit {
+
+  ngOnInit(): void {
+    this._courseService.getCourseById(this.courseId).subscribe({
+      next: (res) => {
+        this.currentCourse = res;
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.error,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    })
+  }
+
+  constructor(private _courseService: CourseService) { }
 
   @Input()
+  public courseId!: number;
   public currentCourse!: Course;
   public user!: User;
   getLectureName(): string {
