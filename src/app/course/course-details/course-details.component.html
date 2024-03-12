@@ -20,14 +20,15 @@
         <div class="row-img">
             <img class="img" mat-card-image [src]="currentCourse.imgLink">
         </div>
-        <mat-divider></mat-divider>
+        <mat-divider  vertical="true"></mat-divider>
+        <hr>
         <mat-card-content>
             <mat-list class="list-s">
-                <h1 mat-subheader>סיליבוס</h1>
+                <h1 mat-subheader style="font-size: 40px; color: #ff1839; font-weight: bolder;">סיליבוס</h1>
                 @for(s of syllabus(); track s){
                 <mat-list-item class="item-l">
-                    <mat-icon matListItemIcon>commit</mat-icon>
-                    <div matListItemLine>{{s}}</div>
+                    <mat-icon matListItemIcon style="color: #ff1839;">commit</mat-icon>
+                    <div matListItemLine style="color: black;">{{s}}</div>
                 </mat-list-item>
                 }
             </mat-list>
