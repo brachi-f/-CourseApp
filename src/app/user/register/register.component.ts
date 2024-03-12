@@ -10,6 +10,7 @@ import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import Swal from 'sweetalert2';
+import { Role, User } from '../../Entities/User.model';
 
 
 @Component({
@@ -42,11 +43,13 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-
-    if (this.signinUser.valid)
-      this._userService.signIn(this.signinUser.value).subscribe({
+    let user: User;
+    if (this.signinUser.valid) {
+      user = this.signinUser.value;
+      user.role = user.role == Role.student ? 0 : 1;
+      this._userService.signIn(user).subscribe({
         next: (res) => {
-          if (typeof window !== 'undefined')
+          if (typeof (window) != undefined)
             localStorage.setItem("user", JSON.stringify(res));
           Swal.fire({
             showConfirmButton: false,
@@ -62,12 +65,12 @@ export class RegisterComponent implements OnInit {
             icon: 'error',
             showConfirmButton: false,
             timer: 2000,
-            text: err.message
+            text: err.error
           });
         }
       });
+    }
   }
-
   constructor(private _userService: UserService, private _router: Router) { }
 
 }

@@ -12,10 +12,18 @@ export class UserService {
 
   private userLogged?: User;
   getUser(): User | null | undefined {
+    if (typeof window !== 'undefined') {
+      const userData = sessionStorage.getItem("user");
+      if (userData) {
+        this.userLogged = JSON.parse(userData);
+      }
+    }
     return this.userLogged;
   }
-  setUser(value?: User): void {
-    this.userLogged = value;
+  setUser(value: User | null): void {
+    this.userLogged = value? value : undefined;
+    if (typeof window !== 'undefined')
+          localStorage.setItem("user", JSON.stringify(value));
   }
 
   loginUser(username: string, password: string): Observable<User> {

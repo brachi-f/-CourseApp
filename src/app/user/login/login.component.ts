@@ -47,12 +47,36 @@ export class LoginComponent {
         this._router.navigate(['home']);
       },
       error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: err.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
+        console.log(err.status)
+        if (err.status == 404) {
+          Swal.fire({
+            icon: 'error',
+            title: `${err.error}`,
+            showConfirmButton: true,
+            showCloseButton:true,
+            confirmButtonColor: 'grey',
+            confirmButtonText: 'תעביר אותי לעמוד הרשמה'
+          }).then((result) => {
+            if (result.isConfirmed)
+              this._router.navigate(['user/register']);
+          })
+        }
+        else if(err.status == 401){
+          Swal.fire({
+            icon: 'error',
+            title: 'סיסמא שגויה!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: err.error,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
       }
     });
   }
