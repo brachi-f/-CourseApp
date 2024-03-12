@@ -10,7 +10,7 @@ export class Course {
     learningType?: LearningType;
     lecturerId?: number;
     imgLink?: string;
-}
+} 
 
 export enum LearningType {
     "zoom" = 0,

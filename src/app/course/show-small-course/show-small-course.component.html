@@ -1,0 +1,18 @@
+<p>show-small-course works!</p>
+
+<mat-card>
+    <mat-card-title-group>
+        <mat-card-title>{{course.name}}</mat-card-title>
+        <img mat-card-sm-image [src]="course.imgLink">
+        <mat-icon>person_pin</mat-icon>
+        <span mat-card-subtitle>{{getLectureName()}}</span>
+        <mat-card-subtitle>{{category().name}}</mat-card-subtitle>
+        <img mat-card-sm-image [src]="category().iconRouting">
+    </mat-card-title-group>
+    <mat-card-actions>
+        <button mat-fab extended>
+            <mat-icon>double_arrow</mat-icon>
+            הצג פרטי קורס
+        </button>
+    </mat-card-actions>
+</mat-card>

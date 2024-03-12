@@ -5,14 +5,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { User } from '../../Entities/User.model';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-
+import {MatMenuModule} from '@angular/material/menu'
 
 @Component({
   selector: 'header',
   standalone: true,
   imports: [
     CommonModule, MatToolbarModule, MatButtonModule,
-    MatIconModule, RouterLink, RouterLinkActive
+    MatIconModule, RouterLink, RouterLinkActive, MatMenuModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -27,11 +27,9 @@ export class HeaderComponent implements OnInit {
       this.user = JSON.parse(userData);
     }
   }
-  clickUser(): void {
-    if (!this.user)
-      this._route.navigate(['/user/login']);
-    else
-      this._route.navigate(['/user/update', this.user.id]);
+  logOut():void{
+    localStorage.removeItem("user");
+    this._route.navigate(['home']);
   }
   constructor(private _route: Router) { }
 }

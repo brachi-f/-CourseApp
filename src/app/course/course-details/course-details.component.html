@@ -1,0 +1,41 @@
+<p>course-details works!</p>
+ 
+<mat-card>
+    <mat-card-header>
+        <mat-card-title-group>
+        <mat-card-title>{{currentCourse.name}}</mat-card-title>
+        <img mat-card-sm-image [src]="currentCourse.imgLink">
+        <mat-icon>person_pin</mat-icon>
+        <span mat-card-subtitle>{{getLectureName()}}</span>
+        <mat-card-subtitle>{{category().name}}</mat-card-subtitle>
+        <img mat-card-sm-image [src]="category().iconRouting">
+    </mat-card-title-group>
+    <mat-card-title-group>
+        <mat-card-title>אופן הלמידה</mat-card-title>
+        <mat-icon>{{currentCourse.learningType == 0 ? 'computer': 'groups'}}</mat-icon>
+        <mat-card-subtitle>{{currentCourse.learningType == 0 ? 'זום': 'פרונטלי'}}</mat-card-subtitle>
+    </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+        {{syllabus()}}
+    </mat-card-content>
+    <mat-card-content>
+        <mat-icon>event</mat-icon>
+        <p>תאריך התחלת הקורס {{currentCourse.startLearning?.toDateString()}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        @if(user && user.role == 1 && user.id == currentCourse.lecturerId){
+            <button mat-fab >
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-fab >
+                <mat-icon>delete</mat-icon>
+            </button>
+        }@else if (user && user.role == 0) {
+            <button mat-fab extended>
+                אני רוצה להירשם!
+                <mat-icon>group_add</mat-icon>
+            </button>
+        }
+    </mat-card-actions>
+</mat-card>
