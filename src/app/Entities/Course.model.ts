@@ -6,7 +6,7 @@ export class Course {
     categoryId?: number;
     lessonsAmount?: number;
     startLearning?: Date;
-    syllabus?: string[];
+    syllabus?: string;
     learningType?: LearningType;
     lecturerId?: number;
     imgLink?: string;

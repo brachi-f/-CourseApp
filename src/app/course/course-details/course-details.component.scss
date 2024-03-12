@@ -1,9 +1,50 @@
-.course{
+.course {
     width: 60vw;
     background-color: white;
     display: flex;
 }
-.container{
+
+.container {
     display: flex;
     justify-content: center;
 }
+
+.course-name {
+    display: block;
+    font-size: 40px;
+    color: #ff1839;
+    font-weight: bold;
+    // padding: 25px;
+}
+
+.row-title {
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.row-img {
+    display: flex;
+    justify-content: center;
+}
+
+.bt {
+    width: 20vw;
+    height: 50px;
+}
+
+.img {
+    width: 50%;
+}
+
+.list-s {
+    direction: rtl;
+    background-color: lightgrey;
+}
+
+.item-l {
+    color: #ff1839;
+}
+.mat-mdc-list-item-icon {
+    color: rgba(0, 0, 0, 0.54);
+  }

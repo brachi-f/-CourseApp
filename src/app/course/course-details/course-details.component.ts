@@ -6,6 +6,8 @@ import { Course } from '../../Entities/Course.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule} from '@angular/material/list';
+import { MatDividerModule} from '@angular/material/divider';
 import { } from '@angular/material';
 import { User } from '../../Entities/User.model';
 import { CourseService } from '../course.service';
@@ -27,13 +29,15 @@ export interface Tile {
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    MatListModule,
+    MatDividerModule
   ],
   templateUrl: './course-details.component.html',
   styleUrl: './course-details.component.scss'
 })
 export class CourseDetailsComponent implements OnInit {
-  
+
   ngOnInit(): void {
     this._courseService.getCourseById(this.courseId).subscribe({
       next: (res) => {
@@ -59,8 +63,9 @@ export class CourseDetailsComponent implements OnInit {
   getLectureName(): string {
     return "lecture"
   }
-  syllabus(): string {
-    return this.currentCourse.syllabus?.toString() || "syllabus";
+  syllabus(): string[] | undefined {
+    let s = this.currentCourse.syllabus?.split('|');
+    return s;
   }
   category(): Category {
     return new Category();
