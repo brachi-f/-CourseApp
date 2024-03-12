@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import Swal from 'sweetalert2';
 import { Role, User } from '../../Entities/User.model';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -49,7 +50,6 @@ export class RegisterComponent implements OnInit {
       user.role = user.role == Role.student ? 0 : 1;
       this._userService.signIn(user).subscribe({
         next: (res) => {
-          this._userService.setUser(res);
           Swal.fire({
             showConfirmButton: false,
             title: `שלום ${res.name}`,
@@ -57,6 +57,7 @@ export class RegisterComponent implements OnInit {
             timer: 2000,
             icon: 'success'
           });
+          this._authService.setUser(res);
           this._router.navigate(['home']);
         },
         error: (err) => {
@@ -70,6 +71,6 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
-  constructor(private _userService: UserService, private _router: Router) { }
+  constructor(private _userService: UserService, private _router: Router, private _authService: AuthService) { }
 
 }
