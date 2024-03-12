@@ -5,10 +5,19 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Course } from '../../Entities/Course.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { } from '@angular/material';
 import { User } from '../../Entities/User.model';
 import { CourseService } from '../course.service';
 import Swal from 'sweetalert2';
+
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  text: string;
+}
+
 
 @Component({
   selector: 'course-details',
@@ -18,12 +27,13 @@ import Swal from 'sweetalert2';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatGridListModule
   ],
   templateUrl: './course-details.component.html',
   styleUrl: './course-details.component.scss'
 })
 export class CourseDetailsComponent implements OnInit {
-
+  
   ngOnInit(): void {
     this._courseService.getCourseById(this.courseId).subscribe({
       next: (res) => {

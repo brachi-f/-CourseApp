@@ -6,6 +6,7 @@ import { AddCourseComponent } from './add-course/add-course.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { ShowSmallCourseComponent } from './show-small-course/show-small-course.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CourseRoutingModule } from './course-routing.module';
 
 
 
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     AllCoursesComponent,
     AddCourseComponent,
     CourseDetailsComponent,
-    ShowSmallCourseComponent
+    ShowSmallCourseComponent,
+    CourseRoutingModule
   ],
   providers: [
     CourseService

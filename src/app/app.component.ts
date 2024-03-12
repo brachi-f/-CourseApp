@@ -7,13 +7,14 @@ import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user/user.service';
 import { AuthService } from './services/auth.service';
+import { CourseModule } from './course/course.module';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, RouterOutlet, HttpClientModule,
+    CommonModule, RouterOutlet, HttpClientModule, CourseModule,
     HomePageComponent, HeaderComponent, FormsModule, ReactiveFormsModule
   ],
   providers: [AuthService],
