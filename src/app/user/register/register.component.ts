@@ -49,8 +49,7 @@ export class RegisterComponent implements OnInit {
       user.role = user.role == Role.student ? 0 : 1;
       this._userService.signIn(user).subscribe({
         next: (res) => {
-          if (typeof (window) != undefined)
-            localStorage.setItem("user", JSON.stringify(res));
+          this._userService.setUser(res);
           Swal.fire({
             showConfirmButton: false,
             title: `שלום ${res.name}`,

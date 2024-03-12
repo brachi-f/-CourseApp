@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { User } from '../../Entities/User.model';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu'
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'header',
@@ -22,17 +23,13 @@ export class HeaderComponent implements OnInit {
   public user?: User;
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined') {
-      const userData = localStorage.getItem("user");
-      if (userData) {
-        this.user = JSON.parse(userData);
-      }
-    }
+    this._authService.getUser().subscribe(user => {
+      this.user = user? user : undefined;
+    });
   }
   logOut(): void {
-    localStorage.removeItem("user");
-    this.user = undefined;
+    this._authService.setUser(null);
     this._route.navigate(['home']);
   }
-  constructor(private _route: Router) { }
+  constructor(private _route: Router, private _authService: AuthService) { }
 }

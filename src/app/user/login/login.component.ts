@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'login',
@@ -36,14 +37,13 @@ export class LoginComponent {
   login() {
     this._userService.loginUser(this.loginForm.value['name'], this.loginForm.value['password']).subscribe({
       next: (res) => {
-        if (typeof window !== 'undefined')
-          localStorage.setItem("user", JSON.stringify(res));
         Swal.fire({
           icon: 'success',
           title: `ברוך הבא ${res.name}`,
           showConfirmButton: false,
           timer: 1500
         });
+        this._authService.setUser(res);
         this._router.navigate(['home']);
       },
       error: (err) => {
@@ -53,7 +53,7 @@ export class LoginComponent {
             icon: 'error',
             title: `${err.error}`,
             showConfirmButton: true,
-            showCloseButton:true,
+            showCloseButton: true,
             confirmButtonColor: 'grey',
             confirmButtonText: 'תעביר אותי לעמוד הרשמה'
           }).then((result) => {
@@ -61,7 +61,7 @@ export class LoginComponent {
               this._router.navigate(['user/register']);
           })
         }
-        else if(err.status == 401){
+        else if (err.status == 401) {
           Swal.fire({
             icon: 'error',
             title: 'סיסמא שגויה!',
@@ -80,5 +80,5 @@ export class LoginComponent {
       }
     });
   }
-  constructor(private _userService: UserService, private _router: Router) { }
+  constructor(private _userService: UserService, private _router: Router, private _authService: AuthService) { }
 }

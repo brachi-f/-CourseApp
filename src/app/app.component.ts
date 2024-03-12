@@ -5,15 +5,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './pages/header/header.component';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './user/user.service';
+import { AuthService } from './services/auth.service';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, RouterOutlet,
+    CommonModule, RouterOutlet, HttpClientModule,
     HomePageComponent, HeaderComponent, FormsModule, ReactiveFormsModule
   ],
+  providers: [AuthService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
