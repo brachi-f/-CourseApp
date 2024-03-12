@@ -36,7 +36,8 @@ export class LoginComponent {
   login() {
     this._userService.loginUser(this.loginForm.value['name'], this.loginForm.value['password']).subscribe({
       next: (res) => {
-        localStorage.setItem("user", JSON.stringify(res));
+        if (typeof window !== 'undefined')
+          localStorage.setItem("user", JSON.stringify(res));
         Swal.fire({
           icon: 'success',
           title: `ברוך הבא ${res.name}`,

@@ -46,7 +46,8 @@ export class RegisterComponent implements OnInit {
     if (this.signinUser.valid)
       this._userService.signIn(this.signinUser.value).subscribe({
         next: (res) => {
-          localStorage.setItem("user", JSON.stringify(res));
+          if (typeof window !== 'undefined')
+            localStorage.setItem("user", JSON.stringify(res));
           Swal.fire({
             showConfirmButton: false,
             title: `שלום ${res.name}`,

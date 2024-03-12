@@ -14,9 +14,11 @@ export class HomePageComponent implements OnInit {
   public user!: User;
 
   ngOnInit(): void {
-    const userData = localStorage.getItem("user");
-    if (userData) {
-      this.user = JSON.parse(userData);
+    if (typeof window !== 'undefined') {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        this.user = JSON.parse(userData);
+      }
     }
   }
 

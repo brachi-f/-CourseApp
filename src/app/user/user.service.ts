@@ -10,17 +10,27 @@ export class UserService {
 
   constructor(private _http: HttpClient) { }
 
-  loginUser(name: string, password: string): Observable<User> {
-    return this._http.post<User>("/api/login", { name: name, password: password });
+  private userLogged?: User;
+  getUser(): User | null | undefined {
+    return this.userLogged;
+  }
+  setUser(value?: User): void {
+    this.userLogged = value;
+  }
+
+  loginUser(username: string, password: string): Observable<User> {
+    return this._http.post<User>("http://localhost:5014/api/login", null, {
+      params: { username, password }
+    });
   }
   signIn(user: User): Observable<User> {
-    return this._http.post<User>("/api/register", user);
+    return this._http.post<User>("http://localhost:5014/api/register", user);
   }
   updateUser(user: User): Observable<User> {
-    return this._http.put<User>(`/api/user/${user.id}`, user);
+    return this._http.put<User>(`http://localhost:5014/api/user/${user.id}`, user);
   }
-  getUserById(id:number): Observable<User>{
-    return this._http.get<User>(`/api/user/${id}`);
+  getUserById(id: number): Observable<User> {
+    return this._http.get<User>(`http://localhost:5014/api/user/${id}`);
   }
 
 }
