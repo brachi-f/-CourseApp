@@ -7,6 +7,7 @@ import { CourseDetailsComponent } from './course-details/course-details.componen
 import { ShowSmallCourseComponent } from './show-small-course/show-small-course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseRoutingModule } from './course-routing.module';
+import { AuthService } from '../services/auth.service';
 
 
 
@@ -22,7 +23,7 @@ import { CourseRoutingModule } from './course-routing.module';
     CourseRoutingModule
   ],
   providers: [
-    CourseService
+    CourseService, AuthService
   ]
 })
 export class CourseModule { }

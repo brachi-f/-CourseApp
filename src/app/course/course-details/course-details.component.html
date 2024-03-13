@@ -1,5 +1,5 @@
 <p>course-details works!</p>
-<div class="container">
+<div class="details">
     @if(currentCourse){
     <mat-card class="course">
         <mat-card-header>
@@ -33,7 +33,15 @@
                 }
             </mat-list>
         </mat-card-content>
-        <mat-divider></mat-divider>
+        <hr>
+        <mat-card-footer>
+            @if(user?.role == 0){
+                <button mat-raised-button color="primary">אני רוצה להירשם לקורס</button>
+            }@else if (user?.id == currentCourse.id) {
+                <button mat-raised-button color="warn">עריכה</button>
+                <button mat-raised-button color="warn">מחיקה</button>
+            }
+        </mat-card-footer>
     </mat-card>
     }
 </div>
