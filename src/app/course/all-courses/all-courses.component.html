@@ -1,2 +1,8 @@
 <p>all-courses works!</p>
-<course-details [courseId]="4"></course-details>
+<div class="container">
+    <div class="row">
+        @for(course of courseList; track course){
+        <course-details [courseId]="course.id"></course-details>
+        }
+    </div>
+</div>

@@ -1,4 +1,3 @@
-<p>course-details works!</p>
 <div class="details">
     @if(currentCourse){
     <mat-card class="course">
@@ -20,7 +19,7 @@
         <div class="row-img">
             <img class="img" mat-card-image [src]="currentCourse.imgLink">
         </div>
-        <mat-divider  vertical="true"></mat-divider>
+        <mat-divider vertical="true"></mat-divider>
         <hr>
         <mat-card-content>
             <mat-list class="list-s">
@@ -34,12 +33,18 @@
             </mat-list>
         </mat-card-content>
         <hr>
-        <mat-card-footer>
+        <mat-card-footer style="padding: 15px;">
             @if(user?.role == 0){
-                <button mat-raised-button color="primary">אני רוצה להירשם לקורס</button>
-            }@else if (user?.id == currentCourse.id) {
-                <button mat-raised-button color="warn">עריכה</button>
-                <button mat-raised-button color="warn">מחיקה</button>
+            <button mat-raised-button color="primary">אני רוצה להירשם לקורס</button>
+            }@else if (user?.id == currentCourse.lecturerId) {
+            <button mat-raised-button style="margin: 5px;" color="primary">
+                <mat-icon>edit</mat-icon>
+                עריכה
+            </button>
+            <button mat-raised-button style="margin: 5px;" color="primary">
+                <mat-icon>delete</mat-icon>
+                מחיקה
+            </button>
             }
         </mat-card-footer>
     </mat-card>

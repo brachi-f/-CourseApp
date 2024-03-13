@@ -1,7 +1,9 @@
 .course {
-    width: 60vw;
+    width: 40vw;
     background-color: white;
     display: flex;
+    border: 1px solid gray;
+    border-radius: 25px;
 }
 
 .container {
@@ -29,7 +31,7 @@
 }
 
 .bt {
-    width: 20vw;
+    width: 40%;
     height: 40px;
 }
 
@@ -45,9 +47,7 @@
 .item-l {
     color: #ff1839;
 }
+
 .mat-mdc-list-item-icon {
     color: rgba(0, 0, 0, 0.54);
-  }
-  .details{
-    width: 30vw;
-  }
+}
