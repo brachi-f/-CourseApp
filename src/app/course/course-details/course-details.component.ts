@@ -61,6 +61,14 @@ export class CourseDetailsComponent implements OnInit {
       if (!user)
         this._route.navigate(['home']);
     });
+    this._courseService.getLecture(this.currentCourse?.lecturerId || 0).subscribe({
+      next:(res)=>{
+        this.lectureName = res.name;
+      },
+      error:(err)=>{
+        console.error("error in getting lecture name",err)
+      }
+    })
   }
 
   constructor(private _courseService: CourseService, private _authService: AuthService, private _route: Router) { }
@@ -69,9 +77,8 @@ export class CourseDetailsComponent implements OnInit {
   public courseId!: number;
   public currentCourse!: Course;
   public user?: User;
-  getLectureName(): string {
-    return "lecture"
-  }
+  public lectureName?:string;
+  
   syllabus(): string[] | undefined {
     let s = this.currentCourse.syllabus?.split('|');
     return s;

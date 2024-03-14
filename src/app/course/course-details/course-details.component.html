@@ -1,4 +1,4 @@
-<!-- <div class="details"> -->
+
     @if(currentCourse){
     <mat-card class="course">
         <mat-card-header>
@@ -14,7 +14,7 @@
             </button>
             <button class="bt" mat-flat-button color="warn">
                 <mat-icon>person_pin</mat-icon>
-                {{"מרצה "+ currentCourse.lecturerId}}
+                {{"מרצה "+ lectureName}}
             </button>
         </div>
         <div class="row-img">
@@ -50,4 +50,3 @@
         </mat-card-footer>
     </mat-card>
     }
-<!-- </div> -->

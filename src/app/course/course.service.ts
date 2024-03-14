@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Course } from '../Entities/Course.model';
+import { User } from '../Entities/User.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,9 @@ export class CourseService {
   }
   getCourseById(courseId:number):Observable<Course>{
     return this._http.get<Course>(`http://localhost:5014/api/course/${courseId}`);
+  }
+  getLecture(lectureId:number):Observable<User>{
+    return this._http.get<User>(`http://localhost:5014/api/user/${lectureId}`);
   }
 
 }
