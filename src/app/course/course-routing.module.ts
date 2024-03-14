@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AllCoursesComponent } from './all-courses/all-courses.component';
 import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { AddCourseComponent } from './add-course/add-course.component';
-import { EditCourseComponent } from './edit-course/edit-course.component';
 
 const courseRoutes: Routes = [
   { path: 'edit', component: AddCourseComponent,pathMatch: 'full' },/*new */

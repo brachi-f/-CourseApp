@@ -11,7 +11,7 @@ import { CategoryModule } from '../category/category.module';
 import { LearningIconPipe } from './learning-icon.pipe';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { RouterLink } from '@angular/router';
-import { EditCourseComponent } from './edit-course/edit-course.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -23,10 +23,11 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
     CourseRoutingModule,
     AddCourseComponent,
     AllCoursesComponent,
-    EditCourseComponent,
+    // EditCourseComponent,
     CategoryModule,
     ShowSmallCourseComponent,
-
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     CourseService, AuthService, LearningIconPipe
