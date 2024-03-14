@@ -52,6 +52,15 @@ export class CourseDetailsComponent implements OnInit {
       this._courseService.getCourseById(this.courseId).subscribe({
         next: (res) => {
           this.currentCourse = res;
+          if (this.currentCourse)
+            this._courseService.getLecture(this.currentCourse.lecturerId).subscribe({
+              next: (res) => {
+                this.lectureName = res.name;
+              },
+              error: (err) => {
+                console.log("error in getting lecture name", err)
+              }
+            })
         },
         error: (err) => {
           console.log("error in get course by id", err)
@@ -69,16 +78,7 @@ export class CourseDetailsComponent implements OnInit {
       if (!user)
         this._route.navigate(['home']);
     });
-    if (this.currentCourse)
-      this._courseService.getLecture(this.currentCourse.lecturerId).subscribe({
-        next: (res) => {
-          this.lectureName = res.name;
-        },
-        error: (err) => {
-          console.log("error in getting lecture name", err)
-        }
 
-      })
   }
 
   constructor(private _courseService: CourseService, private _authService: AuthService, private _route: Router) { }

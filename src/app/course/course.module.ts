@@ -11,6 +11,7 @@ import { CategoryModule } from '../category/category.module';
 import { LearningIconPipe } from './learning-icon.pipe';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { RouterLink } from '@angular/router';
+import { EditCourseComponent } from './edit-course/edit-course.component';
 
 
 
@@ -20,8 +21,9 @@ import { RouterLink } from '@angular/router';
     CommonModule,
     HttpClientModule,
     CourseRoutingModule,
-    AllCoursesComponent,
     AddCourseComponent,
+    AllCoursesComponent,
+    EditCourseComponent,
     CategoryModule,
     ShowSmallCourseComponent,
 
