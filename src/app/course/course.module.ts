@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 import { CategoryModule } from '../category/category.module';
 import { LearningIconPipe } from './learning-icon.pipe';
 import { CourseDetailsComponent } from './course-details/course-details.component';
+import { RouterLink } from '@angular/router';
 
 
 

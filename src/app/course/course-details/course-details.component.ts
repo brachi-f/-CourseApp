@@ -48,35 +48,37 @@ export class CourseDetailsComponent implements OnInit {
   LearningType = LearningType;
 
   ngOnInit(): void {
-    this._courseService.getCourseById(this.courseId).subscribe({
-      next: (res) => {
-        this.currentCourse = res;
-      },
-      error: (err) => {
-        console.log("error in get course by id",err)
-        Swal.fire({
-          icon: 'error',
-          title: err.error,
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    });
+    if (this.courseId)
+      this._courseService.getCourseById(this.courseId).subscribe({
+        next: (res) => {
+          this.currentCourse = res;
+        },
+        error: (err) => {
+          console.log("error in get course by id", err)
+          Swal.fire({
+            icon: 'error',
+            title: err.error,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      });
     this._authService.getUser().subscribe(user => {
       if (user)
         this.user = user;
       if (!user)
         this._route.navigate(['home']);
     });
-    this._courseService.getLecture(this.currentCourse?.lecturerId || 0).subscribe({
-      next: (res) => {
-        this.lectureName = res.name;
-      },
-      error: (err) => {
-        console.log("error in getting lecture name", err)
-      }
+    if (this.currentCourse)
+      this._courseService.getLecture(this.currentCourse.lecturerId).subscribe({
+        next: (res) => {
+          this.lectureName = res.name;
+        },
+        error: (err) => {
+          console.log("error in getting lecture name", err)
+        }
 
-    })
+      })
   }
 
   constructor(private _courseService: CourseService, private _authService: AuthService, private _route: Router) { }

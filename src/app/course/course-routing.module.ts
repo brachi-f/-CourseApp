@@ -9,8 +9,8 @@ const courseRoutes: Routes = [
   { path: 'all', component: AllCoursesComponent, pathMatch: 'full' },/*all */
   { path: 'all/:id', component: AllCoursesComponent },/*mine */
   { path: ':id', component: CourseDetailsComponent },
-  { path: 'edit', component: AddCourseComponent, pathMatch: 'full' },/*new */
-  { path: 'edit/:id', component: AddCourseComponent, pathMatch: 'full' },/*edit */
+  { path: 'edit/:id', component: AddCourseComponent},/*edit */
+  { path: 'edit', component: AddCourseComponent },/*new */
   { path: '**', component: NotFoundComponent }
 ] ;
 

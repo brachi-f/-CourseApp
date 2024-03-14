@@ -31,5 +31,8 @@ export class HeaderComponent implements OnInit {
     this._authService.setUser(null);
     this._route.navigate(['home']);
   }
+  navToAdd():void{
+    this._route.navigate(['/course/edit']);
+  }
   constructor(private _route: Router, private _authService: AuthService) { }
 }

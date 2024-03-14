@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'add-course',
@@ -7,6 +8,9 @@ import { Component } from '@angular/core';
   templateUrl: './add-course.component.html',
   styleUrl: './add-course.component.scss'
 })
-export class AddCourseComponent {
+export class AddCourseComponent implements OnInit{
+  ngOnInit(): void {
+    console.log("add-course-component")
+  }
 
 }

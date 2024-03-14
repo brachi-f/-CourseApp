@@ -8,7 +8,7 @@ export class Course {
     startLearning?: Date;
     syllabus?: string;
     learningType!: LearningType;
-    lecturerId?: number;
+    lecturerId!: number;
     imgLink?: string;
 } 
 
