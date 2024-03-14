@@ -116,7 +116,7 @@ export class CourseDetailsComponent implements OnInit {
           title: 'נרשמת בהצלחה',
           titleText: 'שמחים שהצטרפת אלינו😊',
           showConfirmButton: false
-        })
+        });
       },
       error: (err) => {
         Swal.fire({
@@ -124,7 +124,7 @@ export class CourseDetailsComponent implements OnInit {
           title: err.error,
           showConfirmButton: false,
           timer: 2000
-        })
+        });
       }
     });
   }
