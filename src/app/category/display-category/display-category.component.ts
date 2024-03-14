@@ -1,11 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Category } from '../../Entities/Caregory.model';
 import { CategoryService } from '../category.service';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import {} from '@angular/material';
 
 @Component({
   selector: 'display-category',
   standalone: true,
-  imports: [],
+  imports: [
+    MatCardModule,
+    MatIconModule
+  ],
   templateUrl: './display-category.component.html',
   styleUrl: './display-category.component.scss'
 })
