@@ -29,7 +29,7 @@
     <button mat-button [routerLink]="'/course/all/' + user.id" routerLinkActive="active">הקורסים שלי</button>
     <button mat-button routerLink="/course/all" routerLinkActive="active">צפייה בקורסים</button>
         @if(user.role == 1){
-        <button mat-button routerLink="/course/edit" routerLinkActive="active">הוספת קורס</button>
+        <button mat-button routerLink="/course/edit/" routerLinkActive="active">הוספת קורס</button>
         }
     }@else{
     <button mat-button routerLink="/user/register" routerLinkActive="active">הרשמה</button>

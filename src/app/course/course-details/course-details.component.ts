@@ -53,6 +53,7 @@ export class CourseDetailsComponent implements OnInit {
         this.currentCourse = res;
       },
       error: (err) => {
+        console.log("error in get course by id",err)
         Swal.fire({
           icon: 'error',
           title: err.error,
