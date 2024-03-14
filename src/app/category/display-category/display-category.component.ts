@@ -3,14 +3,19 @@ import { Category } from '../../Entities/Caregory.model';
 import { CategoryService } from '../category.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 import {} from '@angular/material';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'display-category',
   standalone: true,
   imports: [
+    CommonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './display-category.component.html',
   styleUrl: './display-category.component.scss'
@@ -31,5 +36,6 @@ export class DisplayCategoryComponent implements OnInit {
   public catId!: number;
   public cat?: Category;
   public catList?: Category[];
+  
 
 }

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user/user.service';
 import { AuthService } from './services/auth.service';
 import { CourseModule } from './course/course.module';
+import { CategoryModule } from './category/category.module';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { CourseModule } from './course/course.module';
   standalone: true,
   imports: [
     CommonModule, RouterOutlet, HttpClientModule, CourseModule,
-    HomePageComponent, HeaderComponent, FormsModule, ReactiveFormsModule
+    HomePageComponent, HeaderComponent, FormsModule, ReactiveFormsModule, CategoryModule
   ],
   providers: [AuthService],
   templateUrl: './app.component.html',

@@ -6,6 +6,7 @@
                 <mat-card-title class="course-name" color="accent">{{currentCourse.name}}</mat-card-title>
             </div>
         </mat-card-header>
+        <display-category [catId]="currentCourse.categoryId || 0"></display-category>
         <div class="row-title">
             <button class="bt" mat-flat-button color="warn">
                 <mat-icon>computer</mat-icon>

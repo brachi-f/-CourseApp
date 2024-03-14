@@ -14,6 +14,7 @@ import { CourseService } from '../course.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { DisplayCategoryComponent } from '../../category/display-category/display-category.component';
 
 export interface Tile {
   color: string;
@@ -33,7 +34,8 @@ export interface Tile {
     MatIconModule,
     MatGridListModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    DisplayCategoryComponent
   ],
   templateUrl: './course-details.component.html',
   styleUrl: './course-details.component.scss'
