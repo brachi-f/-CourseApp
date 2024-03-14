@@ -1,7 +1,7 @@
 
 
 export class Course {
-    id!: number;
+    id: number =0;
     name?: string;
     categoryId?: number;
     lessonsAmount?: number;

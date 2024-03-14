@@ -5,7 +5,7 @@
             <mat-card-title class="course-name" color="accent">{{currentCourse.name}}</mat-card-title>
         </div>
     </mat-card-header>
-    <display-category [catId]="currentCourse.categoryId || 0"></display-category>
+    <display-category [catId]="currentCourse.categoryId || 1"></display-category>
     <div class="row-title">
         @if(currentCourse){ <button class="bt" mat-flat-button color="warn">
             <mat-icon>{{ currentCourse.learningType| learningIcon }}</mat-icon>
@@ -35,7 +35,7 @@
     <hr>
     <mat-card-footer style="padding: 15px;">
         @if(user?.role == 0){
-        <button mat-raised-button color="primary">אני רוצה להירשם לקורס</button>
+        <button mat-raised-button color="primary" (click)="register()">אני רוצה להירשם לקורס</button>
         }@else if (user?.id == currentCourse.lecturerId) {
         <button mat-raised-button style="margin: 5px;" color="primary">
             <mat-icon>edit</mat-icon>

@@ -62,7 +62,8 @@ export class CourseDetailsComponent implements OnInit {
       }
     });
     this._authService.getUser().subscribe(user => {
-      this.user = user ? user : undefined;
+      if (user)
+        this.user = user;
       if (!user)
         this._route.navigate(['home']);
     });
@@ -82,14 +83,49 @@ export class CourseDetailsComponent implements OnInit {
   @Input()
   public courseId!: number;
   public currentCourse!: Course;
-  public user?: User;
+  public user!: User;
   public lectureName?: string;
 
   syllabus(): string[] | undefined {
     let s = this.currentCourse.syllabus?.split('|');
     return s;
   }
-  category(): Category {
-    return new Category();
+  register() {
+    Swal.fire({
+      title: 'האם אתה רוצה להירשם?',
+      icon: 'question',
+      showConfirmButton: true,
+      showCancelButton: false,
+      confirmButtonColor: 'green',
+      confirmButtonText: 'כן, תירשמו אותי לקורס',
+      showCloseButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.registerToCourse(); // Call registerToCourse if the user confirms
+      }
+    });
+  }
+
+  registerToCourse() {
+    console.log("registerToCourse")
+    this._courseService.registerToCourse(this.currentCourse.id, this.user.id).subscribe({
+      next: (res) => {
+        Swal.fire({
+          icon: 'success',
+          timer: 2000,
+          title: 'נרשמת בהצלחה',
+          titleText: 'שמחים שהצטרפת אלינו😊',
+          showConfirmButton: false
+        })
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.error,
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+    });
   }
 }
