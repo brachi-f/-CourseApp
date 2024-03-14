@@ -7,7 +7,7 @@ export class Course {
     lessonsAmount?: number;
     startLearning?: Date;
     syllabus?: string;
-    learningType?: LearningType;
+    learningType!: LearningType;
     lecturerId?: number;
     imgLink?: string;
 } 

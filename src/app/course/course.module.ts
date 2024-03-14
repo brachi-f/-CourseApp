@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseRoutingModule } from './course-routing.module';
 import { AuthService } from '../services/auth.service';
 import { CategoryModule } from '../category/category.module';
+import { LearningIconPipe } from './learning-icon.pipe';
+import { CourseDetailsComponent } from './course-details/course-details.component';
 
 
 
@@ -21,9 +23,10 @@ import { CategoryModule } from '../category/category.module';
     AddCourseComponent,
     CategoryModule,
     ShowSmallCourseComponent,
+
   ],
   providers: [
-    CourseService, AuthService
+    CourseService, AuthService, LearningIconPipe
   ]
 })
 export class CourseModule { }

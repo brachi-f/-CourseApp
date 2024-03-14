@@ -1,52 +1,51 @@
-
-    @if(currentCourse){
-    <mat-card class="course">
-        <mat-card-header>
-            <div class="row-title">
-                <mat-card-title class="course-name" color="accent">{{currentCourse.name}}</mat-card-title>
-            </div>
-        </mat-card-header>
-        <display-category [catId]="currentCourse.categoryId || 0"></display-category>
+@if(currentCourse){
+<mat-card class="course">
+    <mat-card-header>
         <div class="row-title">
-            <button class="bt" mat-flat-button color="warn">
-                <mat-icon>computer</mat-icon>
-                למידה בזום
-            </button>
-            <button class="bt" mat-flat-button color="warn">
-                <mat-icon>person_pin</mat-icon>
-                {{"מרצה "+ lectureName}}
-            </button>
+            <mat-card-title class="course-name" color="accent">{{currentCourse.name}}</mat-card-title>
         </div>
-        <div class="row-img">
-            <img class="img" mat-card-image [src]="currentCourse.imgLink">
-        </div>
-        <mat-divider vertical="true"></mat-divider>
-        <hr>
-        <mat-card-content>
-            <mat-list class="list-s">
-                <h1 mat-subheader style="font-size: 40px; color: #ff1839; font-weight: bolder;">סיליבוס</h1>
-                @for(s of syllabus(); track s){
-                <mat-list-item class="item-l">
-                    <mat-icon matListItemIcon style="color: #ff1839;">commit</mat-icon>
-                    <div matListItemLine style="color: black;">{{s}}</div>
-                </mat-list-item>
-                }
-            </mat-list>
-        </mat-card-content>
-        <hr>
-        <mat-card-footer style="padding: 15px;">
-            @if(user?.role == 0){
-            <button mat-raised-button color="primary">אני רוצה להירשם לקורס</button>
-            }@else if (user?.id == currentCourse.lecturerId) {
-            <button mat-raised-button style="margin: 5px;" color="primary">
-                <mat-icon>edit</mat-icon>
-                עריכה
-            </button>
-            <button mat-raised-button style="margin: 5px;" color="primary">
-                <mat-icon>delete</mat-icon>
-                מחיקה
-            </button>
+    </mat-card-header>
+    <display-category [catId]="currentCourse.categoryId || 0"></display-category>
+    <div class="row-title">
+        @if(currentCourse){ <button class="bt" mat-flat-button color="warn">
+            <mat-icon>{{ currentCourse.learningType| learningIcon }}</mat-icon>
+            {{ currentCourse.learningType === LearningType.zoom ? 'למידה בזום' : 'למידה פרונטלית' }}
+        </button>
+        <button class="bt" mat-flat-button color="warn">
+            <mat-icon>person_pin</mat-icon>
+            {{"מרצה "+ lectureName}}
+        </button>}
+    </div>
+    <div class="row-img">
+        <img class="img" mat-card-image [src]="currentCourse.imgLink">
+    </div>
+    <mat-divider vertical="true"></mat-divider>
+    <hr>
+    <mat-card-content>
+        <mat-list class="list-s">
+            <h1 mat-subheader style="font-size: 40px; color: #ff1839; font-weight: bolder;">סיליבוס</h1>
+            @for(s of syllabus(); track s){
+            <mat-list-item class="item-l">
+                <mat-icon matListItemIcon style="color: #ff1839;">commit</mat-icon>
+                <div matListItemLine style="color: black;">{{s}}</div>
+            </mat-list-item>
             }
-        </mat-card-footer>
-    </mat-card>
-    }
+        </mat-list>
+    </mat-card-content>
+    <hr>
+    <mat-card-footer style="padding: 15px;">
+        @if(user?.role == 0){
+        <button mat-raised-button color="primary">אני רוצה להירשם לקורס</button>
+        }@else if (user?.id == currentCourse.lecturerId) {
+        <button mat-raised-button style="margin: 5px;" color="primary">
+            <mat-icon>edit</mat-icon>
+            עריכה
+        </button>
+        <button mat-raised-button style="margin: 5px;" color="primary">
+            <mat-icon>delete</mat-icon>
+            מחיקה
+        </button>
+        }
+    </mat-card-footer>
+</mat-card>
+}

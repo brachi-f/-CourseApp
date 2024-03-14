@@ -15,6 +15,8 @@ import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { DisplayCategoryComponent } from '../../category/display-category/display-category.component';
+import { LearningIconPipe } from '../learning-icon.pipe';
+import { LearningType } from '../../Entities/Course.model';
 
 export interface Tile {
   color: string;
@@ -35,12 +37,15 @@ export interface Tile {
     MatGridListModule,
     MatListModule,
     MatDividerModule,
-    DisplayCategoryComponent
+    DisplayCategoryComponent,
+    LearningIconPipe
   ],
   templateUrl: './course-details.component.html',
   styleUrl: './course-details.component.scss'
 })
 export class CourseDetailsComponent implements OnInit {
+
+  LearningType = LearningType;
 
   ngOnInit(): void {
     this._courseService.getCourseById(this.courseId).subscribe({
@@ -62,12 +67,13 @@ export class CourseDetailsComponent implements OnInit {
         this._route.navigate(['home']);
     });
     this._courseService.getLecture(this.currentCourse?.lecturerId || 0).subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.lectureName = res.name;
       },
-      error:(err)=>{
-        console.error("error in getting lecture name",err)
+      error: (err) => {
+        console.log("error in getting lecture name", err)
       }
+
     })
   }
 
@@ -77,8 +83,8 @@ export class CourseDetailsComponent implements OnInit {
   public courseId!: number;
   public currentCourse!: Course;
   public user?: User;
-  public lectureName?:string;
-  
+  public lectureName?: string;
+
   syllabus(): string[] | undefined {
     let s = this.currentCourse.syllabus?.split('|');
     return s;
