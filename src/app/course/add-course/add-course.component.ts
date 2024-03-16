@@ -58,7 +58,7 @@ export class AddCourseComponent implements OnInit {
       "lessonsAmount": new FormControl(0, [Validators.required, Validators.min(1)]),
       "startLearning": new FormControl('', Validators.required),
       "syllabus": new FormArray([]),
-      "learningType": new FormControl('', Validators.required),
+      "learningType": new FormControl(null, Validators.required),
       "lecturerId": new FormControl(''),
       "imgLink": new FormControl('', Validators.required)
     });
@@ -117,7 +117,7 @@ export class AddCourseComponent implements OnInit {
           "startLearning": this.courseToEdit?.startLearning,
           "syllabus": new FormArray((this._courseService.getSyllabus(this.courseToEdit || new Course) || [])
             .map(syllabusItem => new FormControl(syllabusItem))),
-          "learningType": this.courseToEdit?.learningType,
+            "learningType": this.courseToEdit?.learningType === LearningType.zoom ? 0 : 1,
           "lecturerId": this.lecture?.id,
           "imgLink": this.courseToEdit?.imgLink
         });
