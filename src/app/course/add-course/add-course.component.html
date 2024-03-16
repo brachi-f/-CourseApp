@@ -24,13 +24,20 @@
         <input type="date" matInput formControlName="startLearning">
     </mat-form-field>
     <!-- syllibaus -->
-        <mat-chip-listbox formControlName="learningType">
-            <mat-label>אופן הלמידה</mat-label>
-            <mat-chip-option [selected]="courseToEdit?.learningType === learningTypes.zoom" color="primary">למידה
-                בזום</mat-chip-option>
-            <mat-chip-option [selected]="courseToEdit?.learningType === learningTypes.frontal" color="primary">למידה
-                פרונטלית</mat-chip-option>
-        </mat-chip-listbox>
+    @for(fc of syllabusControls; track fc; let i = $index){
+    <mat-form-field formArrayName="syllabus">
+        <mat-label>שורה בסיליבוס</mat-label>
+        <input matInput [formControl]="fc" (change)="changeSyllabus()">
+    </mat-form-field>
+    }
+    
+    <mat-chip-listbox formControlName="learningType">
+        <mat-label>אופן הלמידה</mat-label>
+        <mat-chip-option [selected]="courseToEdit?.learningType === learningTypes.zoom" color="primary">למידה
+            בזום</mat-chip-option>
+        <mat-chip-option [selected]="courseToEdit?.learningType === learningTypes.frontal" color="primary">למידה
+            פרונטלית</mat-chip-option>
+    </mat-chip-listbox>
     <mat-form-field>
         <mat-label>קישור לתמונה</mat-label>
         <input matInput formControlName="imgLink" [value]="courseToEdit?.imgLink">

@@ -40,6 +40,8 @@ export class AddCourseComponent implements OnInit {
   learningTypes = LearningType;
   subscription: Subscription = new Subscription;
   categories: Category[] = [];
+  syllabusArr: string[] = [];
+  syllabusControls: FormControl[] = [new FormControl()]
 
   constructor(
     private _authService: AuthService,
@@ -108,21 +110,26 @@ export class AddCourseComponent implements OnInit {
     this.courseToEditOb.subscribe(val => {
       console.log("this.courseToEditOb.subscribe", val)
       this.courseToEdit = val || undefined;
-      if (val)
+      if (val) {
+        this.syllabusArr = this._courseService.getSyllabus(val);
+        this.syllabusControls = this.syllabusArr.map(syllabusItem => new FormControl(syllabusItem));
+        this.syllabusControls.push(new FormControl())
         this.courseForm.patchValue({
           "id": this.courseToEdit ? this.courseToEdit.id : 0,
           "name": this.courseToEdit?.name,
           "categoryId": this.courseToEdit?.categoryId,
           "lessonsAmount": this.courseToEdit?.lessonsAmount || 0,
           "startLearning": this.courseToEdit?.startLearning,
-          "syllabus": new FormArray((this._courseService.getSyllabus(this.courseToEdit || new Course) || [])
-            .map(syllabusItem => new FormControl(syllabusItem))),
-            "learningType": this.courseToEdit?.learningType === LearningType.zoom ? 0 : 1,
+          "syllabus": new FormArray(this.syllabusControls),
+          "learningType": this.courseToEdit?.learningType === LearningType.zoom ? 0 : 1,
           "lecturerId": this.lecture?.id,
           "imgLink": this.courseToEdit?.imgLink
         });
-      else
+      }
+      else {
         this.courseForm.reset()
+        // this.syllabusControls.push(new FormControl())
+      }
     });
   }
 
@@ -131,5 +138,9 @@ export class AddCourseComponent implements OnInit {
     this.courseForm.patchValue({
       "categoryId": catId
     });
+  }
+  changeSyllabus() {
+    this.syllabusControls = this.syllabusControls.filter(s => s.value)
+    this.syllabusControls.push(new FormControl())
   }
 }
