@@ -8,6 +8,7 @@ import { Role, User } from '../../Entities/User.model';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
 import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +25,8 @@ import { CategoryService } from '../../category/category.service';
     MatSelectModule,
     MatIconModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatChipsModule
   ],
   templateUrl: './add-course.component.html',
   styleUrl: './add-course.component.scss'
@@ -48,7 +50,20 @@ export class AddCourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //check if login and lecture
+    // Initialize courseForm FormGroup
+    this.courseForm = new FormGroup({
+      "id": new FormControl(0),
+      "name": new FormControl('', Validators.required),
+      "categoryId": new FormControl('', Validators.required),
+      "lessonsAmount": new FormControl(0, [Validators.required, Validators.min(1)]),
+      "startLearning": new FormControl('', Validators.required),
+      "syllabus": new FormArray([]),
+      "learningType": new FormControl('', Validators.required),
+      "lecturerId": new FormControl(''),
+      "imgLink": new FormControl('', Validators.required)
+    });
+
+    // check login and lecture
     this._authService.getUser().subscribe(u => {
       if (!u || u.role != Role.lecturer) {
         Swal.fire({
@@ -59,8 +74,9 @@ export class AddCourseComponent implements OnInit {
         });
         this.router.navigate(['home']);
       }
-    })
-    //get categories
+    });
+
+    // Fetch categories
     this._categoryService.getCategoryList().subscribe({
       next: (res) => {
         this.categories = res;
@@ -70,20 +86,21 @@ export class AddCourseComponent implements OnInit {
       }
     });
 
-    //set course to edit by URL
+    // Set course to edit by URL
     this._route.paramMap.subscribe(params => {
-      let courseId = Number(params.get('id'))
+      let courseId = Number(params.get('id'));
       if (courseId) {
         this._courseService.getCourseById(courseId).subscribe({
           next: (res) => {
             this.courseToEditOb.next(res);
           }
-        })
+        });
       } else {
         this.courseToEditOb.next(null);
       }
     });
 
+    // Subscribe to courseToEditOb
     this.courseToEditOb.subscribe(val => {
       this.courseToEdit = val || undefined;
       this.courseForm.patchValue({
@@ -98,6 +115,13 @@ export class AddCourseComponent implements OnInit {
         "lecturerId": this.lecture?.id,
         "imgLink": this.courseToEdit?.imgLink
       });
+    });
+  }
+
+  updateCategoryId(event: any) {
+    let catId = event.target.value;
+    this.courseForm.patchValue({
+      "categoryId": catId
     });
   }
 }
