@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Category } from '../../Entities/Caregory.model';
 import { CategoryService } from '../../category/category.service';
 
@@ -33,7 +33,7 @@ export class AddCourseComponent implements OnInit {
 
   courseForm!: FormGroup;
   courseToEdit?: Course;
-  courseToEditOb!: Observable<Course | null>;
+  courseToEditOb: BehaviorSubject<Course | null> = new BehaviorSubject<Course | null>(null);
   lecture?: User;
   learningTypes = LearningType;
   subscription: Subscription = new Subscription;
@@ -48,24 +48,17 @@ export class AddCourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //set courseToEdit
-    this.courseToEditOb.subscribe(val => {
-      if (val)
-        this.courseToEdit = val;
-      else
-        this.courseToEdit = undefined;
-      this.courseForm = new FormGroup({
-        "id": new FormControl(this.courseToEdit ? this.courseToEdit.id : 0),
-        "name": new FormControl(this.courseToEdit?.name, Validators.required),
-        "categoryId": new FormControl(this.courseToEdit?.categoryId, Validators.required),
-        "lessonsAmount": new FormControl(this.courseToEdit?.lessonsAmount, [Validators.required, Validators.min(1)]),
-        "startLearning": new FormControl(this.courseToEdit?.startLearning, [Validators.required]),
-        "syllabus": new FormArray((this.courseToEdit?.getSyllabus() ?? [])
-          .map(syllabusItem => new FormControl(syllabusItem))),
-        "learningType": new FormControl(this.courseToEdit?.learningType, [Validators.required]),
-        "lecturerId": new FormControl(this.lecture?.id),
-        "imgLink": new FormControl()
-      });
+    //check if login and lecture
+    this._authService.getUser().subscribe(u => {
+      if (!u || u.role != Role.lecturer) {
+        Swal.fire({
+          icon: 'error',
+          title: 'אינך מורשה',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        this.router.navigate(['home']);
+      }
     })
     //get categories
     this._categoryService.getCategoryList().subscribe({
@@ -75,25 +68,36 @@ export class AddCourseComponent implements OnInit {
       error: (err) => {
         console.log("error in getting the list of categories", err.error);
       }
-    })
+    });
+
     //set course to edit by URL
     this._route.paramMap.subscribe(params => {
       let courseId = Number(params.get('id'))
       if (courseId) {
         this._courseService.getCourseById(courseId).subscribe({
           next: (res) => {
-            this.courseToEditOb = new Observable((ob) => {
-              ob.next(res);
-            })
+            this.courseToEditOb.next(res);
           }
         })
       } else {
-        this.courseToEditOb = new Observable((ob) => {
-          ob.next(null)
-        })
+        this.courseToEditOb.next(null);
       }
+    });
 
+    this.courseToEditOb.subscribe(val => {
+      this.courseToEdit = val || undefined;
+      this.courseForm.patchValue({
+        "id": this.courseToEdit ? this.courseToEdit.id : 0,
+        "name": this.courseToEdit?.name,
+        "categoryId": this.courseToEdit?.categoryId,
+        "lessonsAmount": this.courseToEdit?.lessonsAmount || 0,
+        "startLearning": this.courseToEdit?.startLearning,
+        "syllabus": new FormArray((this.courseToEdit?.getSyllabus() || [])
+          .map(syllabusItem => new FormControl(syllabusItem))),
+        "learningType": this.courseToEdit?.learningType,
+        "lecturerId": this.lecture?.id,
+        "imgLink": this.courseToEdit?.imgLink
+      });
     });
   }
-
 }
