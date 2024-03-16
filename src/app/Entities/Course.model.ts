@@ -10,6 +10,10 @@ export class Course {
     learningType!: LearningType;
     lecturerId!: number;
     imgLink?: string;
+
+    getSyllabus(): string[] {
+        return this.syllabus?.split('|') || [];
+      }
 } 
 
 export enum LearningType {
