@@ -8,6 +8,7 @@ import { Role, User } from '../../Entities/User.model';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,7 +27,8 @@ import { CategoryService } from '../../category/category.service';
     MatIconModule,
     ReactiveFormsModule,
     FormsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatButtonModule
   ],
   templateUrl: './add-course.component.html',
   styleUrl: './add-course.component.scss'
@@ -62,7 +64,7 @@ export class AddCourseComponent implements OnInit {
       "syllabus": new FormArray([]),
       "learningType": new FormControl(null, Validators.required),
       "lecturerId": new FormControl(''),
-      "imgLink": new FormControl('', Validators.required)
+      "imgLink": new FormControl()
     });
 
     // check login and lecture
@@ -94,23 +96,24 @@ export class AddCourseComponent implements OnInit {
       if (courseId) {
         this._courseService.getCourseById(courseId).subscribe({
           next: (res) => {
-            console.log("syllabus: ", this._courseService.getSyllabus(res))
+            // console.log("syllabus: ", this._courseService.getSyllabus(res))
             this.courseToEditOb.next(res);
           }, error: (err) => {
             console.log("err by getting course by id", err.error)
           }
         });
       } else {
-        console.log("no id in URL")
+        // console.log("no id in URL")
         this.courseToEditOb.next(null);
       }
     });
 
     // Subscribe to courseToEditOb
     this.courseToEditOb.subscribe(val => {
-      console.log("this.courseToEditOb.subscribe", val)
+      // console.log("this.courseToEditOb.subscribe", val)
       this.courseToEdit = val || undefined;
       if (val) {
+        console.log("val",val)
         this.syllabusArr = this._courseService.getSyllabus(val);
         this.syllabusControls = this.syllabusArr.map(syllabusItem => new FormControl(syllabusItem));
         this.syllabusControls.push(new FormControl())
@@ -122,13 +125,13 @@ export class AddCourseComponent implements OnInit {
           "startLearning": this.courseToEdit?.startLearning,
           "syllabus": new FormArray(this.syllabusControls),
           "learningType": this.courseToEdit?.learningType === LearningType.zoom ? 0 : 1,
-          "lecturerId": this.lecture?.id,
-          "imgLink": this.courseToEdit?.imgLink
+          "imgLink": this.courseToEdit?.imgLink,
+          "lecturerId": this.lecture?.id
         });
+        this.courseForm.get('imgLink')?.setValue(val.imgLink);
       }
       else {
         this.courseForm.reset()
-        // this.syllabusControls.push(new FormControl())
       }
     });
   }
@@ -143,4 +146,16 @@ export class AddCourseComponent implements OnInit {
     this.syllabusControls = this.syllabusControls.filter(s => s.value)
     this.syllabusControls.push(new FormControl())
   }
+  save() {
+    if (this.courseForm.errors) {
+      console.log(this.courseForm.errors)
+      return;
+    }
+    let courseToAdd = new Course();
+
+    let syllabus = "";
+
+    console.log(this.courseForm.value)
+  }
+
 }
