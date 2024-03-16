@@ -92,29 +92,37 @@ export class AddCourseComponent implements OnInit {
       if (courseId) {
         this._courseService.getCourseById(courseId).subscribe({
           next: (res) => {
+            console.log("syllabus: ", this._courseService.getSyllabus(res))
             this.courseToEditOb.next(res);
+          }, error: (err) => {
+            console.log("err by getting course by id", err.error)
           }
         });
       } else {
+        console.log("no id in URL")
         this.courseToEditOb.next(null);
       }
     });
 
     // Subscribe to courseToEditOb
     this.courseToEditOb.subscribe(val => {
+      console.log("this.courseToEditOb.subscribe", val)
       this.courseToEdit = val || undefined;
-      this.courseForm.patchValue({
-        "id": this.courseToEdit ? this.courseToEdit.id : 0,
-        "name": this.courseToEdit?.name,
-        "categoryId": this.courseToEdit?.categoryId,
-        "lessonsAmount": this.courseToEdit?.lessonsAmount || 0,
-        "startLearning": this.courseToEdit?.startLearning,
-        "syllabus": new FormArray((this.courseToEdit?.getSyllabus() || [])
-          .map(syllabusItem => new FormControl(syllabusItem))),
-        "learningType": this.courseToEdit?.learningType,
-        "lecturerId": this.lecture?.id,
-        "imgLink": this.courseToEdit?.imgLink
-      });
+      if (val)
+        this.courseForm.patchValue({
+          "id": this.courseToEdit ? this.courseToEdit.id : 0,
+          "name": this.courseToEdit?.name,
+          "categoryId": this.courseToEdit?.categoryId,
+          "lessonsAmount": this.courseToEdit?.lessonsAmount || 0,
+          "startLearning": this.courseToEdit?.startLearning,
+          "syllabus": new FormArray((this._courseService.getSyllabus(this.courseToEdit || new Course) || [])
+            .map(syllabusItem => new FormControl(syllabusItem))),
+          "learningType": this.courseToEdit?.learningType,
+          "lecturerId": this.lecture?.id,
+          "imgLink": this.courseToEdit?.imgLink
+        });
+      else
+        this.courseForm.reset()
     });
   }
 

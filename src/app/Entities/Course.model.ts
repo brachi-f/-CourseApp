@@ -1,7 +1,7 @@
 
 
 export class Course {
-    id: number =0;
+    id: number = 0;
     name?: string;
     categoryId?: number;
     lessonsAmount?: number;
@@ -11,10 +11,8 @@ export class Course {
     lecturerId!: number;
     imgLink?: string;
 
-    getSyllabus(): string[] {
-        return this.syllabus?.split('|') || [];
-      }
-} 
+    
+}
 
 export enum LearningType {
     "zoom" = 0,

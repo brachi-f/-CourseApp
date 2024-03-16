@@ -11,6 +11,10 @@ export class CourseService {
 
   constructor(private _http: HttpClient) { }
 
+  getSyllabus(course:Course): string[] {
+    return course.syllabus ? course.syllabus.split('|') : [];
+}
+
   getListOfCourses(): Observable<Course[]> {
     return this._http.get<Course[]>('http://localhost:5014/api/course');
   }

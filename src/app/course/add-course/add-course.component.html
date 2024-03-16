@@ -1,7 +1,7 @@
 <form [formGroup]="courseForm">
     <mat-form-field appearance="fill">
         <mat-label>שם</mat-label>
-        <input matInput formControlName="name" [value]="courseForm?.get('name')?.value">
+        <input matInput formControlName="name">
     </mat-form-field>
     <mat-form-field>
         <mat-label>קטגוריה</mat-label>
@@ -24,9 +24,16 @@
         <input type="date" matInput formControlName="startLearning">
     </mat-form-field>
     <!-- syllibaus -->
-    <mat-chip-listbox>
+    <!-- <mat-chip-listbox formControlName="learningType">
         <mat-label>אופן הלמידה</mat-label>
-        <mat-chip-option color="primary">למידה בזום</mat-chip-option>
-        <mat-chip-option color="primary">למידה פרונטלית</mat-chip-option>
-    </mat-chip-listbox>
+        <mat-chip-option [selected]="courseToEdit?.learningType === learningTypes.zoom" color="primary">למידה בזום</mat-chip-option>
+        <mat-chip-option [selected]="courseToEdit?.learningType === learningTypes.frontal" color="primary">למידה פרונטלית</mat-chip-option>
+    </mat-chip-listbox> -->
+    <mat-form-field >
+        <mat-select formControlName="learningType"> 
+            <mat-option [value]="learningTypes.zoom">זום</mat-option>
+            <mat-option [value]="learningTypes.frontal">פרונטלית</mat-option>
+        </mat-select>
+    </mat-form-field>
 </form>
+
