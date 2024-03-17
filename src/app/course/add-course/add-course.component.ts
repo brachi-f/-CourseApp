@@ -60,16 +60,14 @@ export class AddCourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    // check login and lecture
     this._authService.getUser().subscribe(u => {
       if (!u || u.role != Role.lecturer) {
-        Swal.fire({
-          icon: 'error',
-          title: 'אינך מורשה',
-          showConfirmButton: false,
-          timer: 2000
-        });
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'אינך מורשה',
+        //   showConfirmButton: false,
+        //   timer: 2000
+        // });
         this.router.navigate(['home']);
       }
       else
