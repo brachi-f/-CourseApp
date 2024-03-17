@@ -77,7 +77,7 @@ export class AddCourseComponent implements OnInit {
       "syllabus": new FormArray([]),
       "learningType": new FormControl(null, Validators.required),
       "lecturerId": new FormControl(this.lecture?.id),
-      "imgLink": new FormControl('',Validators.required)
+      "imgLink": new FormControl('', Validators.required)
     });
 
     // Fetch categories
@@ -110,27 +110,40 @@ export class AddCourseComponent implements OnInit {
     this.courseToEditOb.subscribe(val => {
       this.courseToEdit = val || undefined;
       if (val) {
-        console.log("val",val)
+        console.log("val", val);
         this.syllabusArr = this._courseService.getSyllabus(val);
-        this.syllabusControls = this.syllabusArr.map(syllabusItem => new FormControl(syllabusItem));
-        this.syllabusControls.push(new FormControl())
-        this.courseForm.patchValue({
-          "id": this.courseToEdit ? this.courseToEdit.id : 0,
-          "name": this.courseToEdit?.name,
-          "categoryId": this.courseToEdit?.categoryId,
-          "lessonsAmount": this.courseToEdit?.lessonsAmount || 0,
-          "startLearning": this.courseToEdit?.startLearning,
-          "learningType": this.courseToEdit?.learningType,
-          "imgLink": this.courseToEdit?.imgLink,
-          "lecturerId": this.lecture?.id,
-          "syllabus": new FormArray(this.syllabusControls)
-        });
-        console.log("update formGroup:")
-      }
-      else {
-        this.courseForm.reset()
+        console.log("syllabusArr:", this.syllabusArr);
+
+        // Clear the existing syllabus form controls
+        (this.courseForm.get('syllabus') as FormArray).clear();
+
+        if (Array.isArray(this.syllabusArr)) {
+          this.syllabusControls = this.syllabusArr.map(syllabusItem => new FormControl(syllabusItem));
+          this.syllabusControls.push(new FormControl());
+
+          this.syllabusControls.forEach(control => {
+            (this.courseForm.get('syllabus') as FormArray).push(control);
+          });
+
+          this.courseForm.patchValue({
+            "id": this.courseToEdit ? this.courseToEdit.id : 0,
+            "name": this.courseToEdit?.name,
+            "categoryId": this.courseToEdit?.categoryId,
+            "lessonsAmount": this.courseToEdit?.lessonsAmount || 0,
+            "startLearning": this.courseToEdit?.startLearning,
+            "learningType": this.courseToEdit?.learningType,
+            "imgLink": this.courseToEdit?.imgLink,
+            "lecturerId": this.lecture?.id
+          });
+          console.log("Update formGroup:");
+        } else {
+          console.error("SyllabusArr is not an array");
+        }
+      } else {
+        this.courseForm.reset();
       }
     });
+
   }
 
   updateCategoryId(event: any) {
