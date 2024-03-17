@@ -131,4 +131,40 @@ export class CourseDetailsComponent implements OnInit {
       }
     });
   }
+  deleteCourse() {
+    Swal.fire({
+      icon: 'warning',
+      title: 'האם אתה בטוח שברצונך למחוק את הקורס?',
+      showConfirmButton: true,
+      confirmButtonText: 'כן',
+      showCloseButton: true
+    }).then((res) => {
+      if (res.isConfirmed)
+        this._courseService.deleteCourse(this.courseId).subscribe({
+          next: (res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'הקורס נמחק בהצלחה!',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        })
+      this._route.navigate(['home'])
+    })
+  }
+  editCourse() {
+    this._route.navigate([`course/edit/${this.courseId}`])
+  }
+  inWeek(): boolean {
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // Get the date for next week
+
+    if (this.currentCourse && this.currentCourse.startLearning) {
+      const courseStartDate = new Date(this.currentCourse.startLearning);
+      return courseStartDate > today && courseStartDate <= nextWeek;
+    }
+
+    return false;
+  }
 }

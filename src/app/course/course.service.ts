@@ -25,7 +25,7 @@ export class CourseService {
     return this._http.delete(`http://localhost:5014/api/course/${id}`);
   }
   updateCourse(id: number, courseToUpdate: Course): Observable<Course> {
-    return this._http.post<Course>(`http://localhost:5014/api/course/${id}`, courseToUpdate);
+    return this._http.put<Course>(`http://localhost:5014/api/course/${id}`, courseToUpdate);
   }
   registerToCourse(courseId: number, userId: number) {
     return this._http.post(`http://localhost:5014/api/course/${courseId}`, null, { params: { userId: userId } });

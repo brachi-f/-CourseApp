@@ -16,6 +16,12 @@
             {{"מרצה "+ lectureName}}
         </button>}
     </div>
+    <div class="row-title">
+        <button class="bt" mat-flat-button [color]="inWeek()?'primary':'accent'">
+            <mat-icon>calendar_month</mat-icon>
+            {{currentCourse.startLearning}}
+        </button>
+    </div>
     <div class="row-img">
         <img class="img" mat-card-image [src]="currentCourse.imgLink">
     </div>
@@ -37,11 +43,11 @@
         @if(user?.role == 0){
         <button mat-raised-button color="primary" (click)="register()">אני רוצה להירשם לקורס</button>
         }@else if (user?.id == currentCourse.lecturerId) {
-        <button mat-raised-button style="margin: 5px;" color="primary">
+        <button mat-raised-button style="margin: 5px;" color="primary" (click)="editCourse()">
             <mat-icon>edit</mat-icon>
             עריכה
         </button>
-        <button mat-raised-button style="margin: 5px;" color="primary">
+        <button mat-raised-button style="margin: 5px;" color="primary" (click)="deleteCourse()">
             <mat-icon>delete</mat-icon>
             מחיקה
         </button>

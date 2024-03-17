@@ -176,12 +176,14 @@ export class AddCourseComponent implements OnInit {
     }
     // Convert the syllabus FormArray to a pipe-separated string
     let syllabusString = syllabusFormArray.value.join('|');
-    console.log(syllabusString);
+    // console.log(syllabusString);
     courseToAdd.syllabus = syllabusString;
-    console.log(courseToAdd)
-
+    console.log("course to add", courseToAdd, "lecture", this.lecture, "course to edit", this.courseToEdit)
+    if (this.lecture)
+      courseToAdd.lecturerId = this.lecture.id
     //save to server
-    if (courseToAdd.id == 0) {
+    if (!this.courseToEdit) {
+      courseToAdd.id = 0;
       this._courseService.addCourse(courseToAdd).subscribe({
         next: (res) => {
           console.log("add course:", res);
@@ -203,6 +205,7 @@ export class AddCourseComponent implements OnInit {
         }
       })
     } else {
+      courseToAdd.id = this.courseToEdit.id
       this._courseService.updateCourse(courseToAdd.id, courseToAdd).subscribe({
         next: (res) => {
           console.log("updated course:", res);
