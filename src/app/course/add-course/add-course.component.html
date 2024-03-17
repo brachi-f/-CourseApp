@@ -1,3 +1,5 @@
+<mat-drawer-container>
+
 <div class="container">
     <div class="form-wrap">
         <form [formGroup]="courseForm">
@@ -14,6 +16,8 @@
                         }
                     </mat-select>
                 </mat-form-field>
+                <!-- <br> -->
+                <button mat-button type="button" class="add-bt" color="primary" (click)="drawer.toggle()">הוספת קטגוריה</button>
             </div>
             <div class="form-row">
 
@@ -65,3 +69,21 @@
         </form>
     </div>
 </div>
+<mat-drawer #drawer mode="side" class="sidenav">
+    <form [formGroup]="categoryForm" class="side-form">
+        <mat-form-field>
+            <mat-label>שם קטגוריה</mat-label>
+            <input #name matInput type="text" formControlName="name">
+            <mat-icon matSuffix>edit</mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>URL לאייקון</mat-label>
+            <input #name matInput type="text" formControlName="iconRouting">
+            <mat-icon matSuffix>link</mat-icon>
+        </mat-form-field>
+        <button mat-icon-button type="submit" (click)="saveCat(); drawer.toggle()" [disabled]="categoryForm.invalid">
+            <mat-icon>save</mat-icon>
+        </button>
+    </form>
+</mat-drawer>
+</mat-drawer-container>

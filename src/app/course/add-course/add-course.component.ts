@@ -13,6 +13,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Category } from '../../Entities/Caregory.model';
 import { CategoryService } from '../../category/category.service';
@@ -28,7 +29,8 @@ import { CategoryService } from '../../category/category.service';
     ReactiveFormsModule,
     FormsModule,
     MatChipsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule
   ],
   templateUrl: './add-course.component.html',
   styleUrl: './add-course.component.scss'
@@ -44,7 +46,11 @@ export class AddCourseComponent implements OnInit {
   categories: Category[] = [];
   syllabusArr: string[] = [];
   syllabusControls: FormControl[] = [new FormControl()]
-
+  categoryForm: FormGroup = new FormGroup({
+    "id": new FormControl(0),
+    "name": new FormControl('', Validators.required),
+    "iconRouting": new FormControl('', Validators.required)
+  })
   constructor(
     private _authService: AuthService,
     private _courseService: CourseService,
@@ -229,4 +235,29 @@ export class AddCourseComponent implements OnInit {
     }
   }
 
+  saveCat() {
+    let category = this.categoryForm.value;
+    this._categoryService.addCategory(category).subscribe({
+      next: (res) => {
+        this.categories = res
+        Swal.fire({
+          icon: 'success',
+          title: 'נוספה בהצלחה',
+          timer: 2000,
+          showConfirmButton: false,
+          position:'bottom-left',
+        })
+      },
+      error: (err)=>{
+        Swal.fire({
+          icon: 'error',
+          title: err.error,
+          timer: 2000,
+          showConfirmButton: false,
+          position: 'bottom-left'
+        })
+        
+      }
+    })
+  }
 }
