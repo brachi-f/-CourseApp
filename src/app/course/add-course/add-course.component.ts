@@ -54,18 +54,6 @@ export class AddCourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Initialize courseForm FormGroup
-    this.courseForm = new FormGroup({
-      "id": new FormControl(0),
-      "name": new FormControl('', Validators.required),
-      "categoryId": new FormControl('', Validators.required),
-      "lessonsAmount": new FormControl(0, [Validators.required, Validators.min(1)]),
-      "startLearning": new FormControl('', Validators.required),
-      "syllabus": new FormArray([]),
-      "learningType": new FormControl(null, Validators.required),
-      "lecturerId": new FormControl(''),
-      "imgLink": new FormControl()
-    });
 
     // check login and lecture
     this._authService.getUser().subscribe(u => {
@@ -78,6 +66,18 @@ export class AddCourseComponent implements OnInit {
         });
         this.router.navigate(['home']);
       }
+    });
+    // Initialize courseForm FormGroup
+    this.courseForm = new FormGroup({
+      "id": new FormControl(0),
+      "name": new FormControl('', Validators.required),
+      "categoryId": new FormControl('', Validators.required),
+      "lessonsAmount": new FormControl(0, [Validators.required, Validators.min(1)]),
+      "startLearning": new FormControl('', Validators.required),
+      "syllabus": new FormArray([]),
+      "learningType": new FormControl(null, Validators.required),
+      "lecturerId": new FormControl(this.lecture?.id),
+      "imgLink": new FormControl('',Validators.required)
     });
 
     // Fetch categories
@@ -96,21 +96,18 @@ export class AddCourseComponent implements OnInit {
       if (courseId) {
         this._courseService.getCourseById(courseId).subscribe({
           next: (res) => {
-            // console.log("syllabus: ", this._courseService.getSyllabus(res))
             this.courseToEditOb.next(res);
           }, error: (err) => {
             console.log("err by getting course by id", err.error)
           }
         });
       } else {
-        // console.log("no id in URL")
         this.courseToEditOb.next(null);
       }
     });
 
     // Subscribe to courseToEditOb
     this.courseToEditOb.subscribe(val => {
-      // console.log("this.courseToEditOb.subscribe", val)
       this.courseToEdit = val || undefined;
       if (val) {
         console.log("val",val)
@@ -123,12 +120,12 @@ export class AddCourseComponent implements OnInit {
           "categoryId": this.courseToEdit?.categoryId,
           "lessonsAmount": this.courseToEdit?.lessonsAmount || 0,
           "startLearning": this.courseToEdit?.startLearning,
-          "syllabus": new FormArray(this.syllabusControls),
-          "learningType": this.courseToEdit?.learningType === LearningType.zoom ? 0 : 1,
+          "learningType": this.courseToEdit?.learningType,
           "imgLink": this.courseToEdit?.imgLink,
-          "lecturerId": this.lecture?.id
+          "lecturerId": this.lecture?.id,
+          "syllabus": new FormArray(this.syllabusControls)
         });
-        this.courseForm.get('imgLink')?.setValue(val.imgLink);
+        console.log("update formGroup:")
       }
       else {
         this.courseForm.reset()
