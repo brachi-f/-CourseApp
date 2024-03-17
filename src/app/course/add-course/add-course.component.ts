@@ -66,6 +66,8 @@ export class AddCourseComponent implements OnInit {
         });
         this.router.navigate(['home']);
       }
+      else
+        this.lecture = u;
     });
     // Initialize courseForm FormGroup
     this.courseForm = new FormGroup({
@@ -124,7 +126,7 @@ export class AddCourseComponent implements OnInit {
           this.syllabusControls.forEach(control => {
             (this.courseForm.get('syllabus') as FormArray).push(control);
           });
-
+          console.log("lecture", this.lecture)
           this.courseForm.patchValue({
             "id": this.courseToEdit ? this.courseToEdit.id : 0,
             "name": this.courseToEdit?.name,
@@ -161,11 +163,67 @@ export class AddCourseComponent implements OnInit {
       console.log(this.courseForm.errors)
       return;
     }
-    let courseToAdd = new Course();
-
-    let syllabus = "";
-
     console.log(this.courseForm.value)
+    let courseToAdd: Course = this.courseForm.value;
+    const syllabusFormArray = this.courseForm.get('syllabus') as FormArray;
+    syllabusFormArray.clear(); // Clear the existing values
+
+    // Populate the FormArray with the new values entered in the input fields
+    for (let control of this.syllabusControls) {
+      if (control.value) {
+        syllabusFormArray.push(new FormControl(control.value));
+      }
+    }
+    // Convert the syllabus FormArray to a pipe-separated string
+    let syllabusString = syllabusFormArray.value.join('|');
+    console.log(syllabusString);
+    courseToAdd.syllabus = syllabusString;
+    console.log(courseToAdd)
+
+    //save to server
+    if (courseToAdd.id == 0) {
+      this._courseService.addCourse(courseToAdd).subscribe({
+        next: (res) => {
+          console.log("add course:", res);
+          Swal.fire({
+            icon: 'success',
+            showConfirmButton: false,
+            title: 'הקורס נוסף בהצלחה',
+            timer: 2000
+          })
+          this.router.navigate(['course/all']);
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: err.error,
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+      })
+    } else {
+      this._courseService.updateCourse(courseToAdd.id, courseToAdd).subscribe({
+        next: (res) => {
+          console.log("updated course:", res);
+          Swal.fire({
+            icon: 'success',
+            showConfirmButton: false,
+            title: 'הקורס עודכן בהצלחה',
+            timer: 2000
+          })
+          this.router.navigate(['course/all']);
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: err.error,
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+      })
+    }
   }
 
 }

@@ -8,7 +8,7 @@
                 </mat-form-field>
                 <mat-form-field class="field-wid1">
                     <mat-label>קטגוריה</mat-label>
-                     <mat-select formControlName="categoryId">
+                    <mat-select formControlName="categoryId">
                         @for(cat of categories; track cat){
                         <mat-option [value]="cat.id">{{cat.name}}</mat-option>
                         }
@@ -43,12 +43,11 @@
             <div class="form-row">
 
                 <mat-chip-listbox formControlName="learningType">
-                    <!-- <mat-label>אופן הלמידה</mat-label> -->
-                    <mat-chip-option value="0" [selected]="courseToEdit?.learningType === learningTypes.zoom"
-                        color="primary">למידה
+                    <mat-chip-option [value]="learningTypes.zoom"
+                        [selected]="courseToEdit?.learningType === learningTypes.zoom" color="primary">למידה
                         בזום</mat-chip-option>
-                    <mat-chip-option value="1" [selected]="courseToEdit?.learningType === learningTypes.frontal"
-                        color="primary">למידה
+                    <mat-chip-option [value]="learningTypes.frontal"
+                        [selected]="courseToEdit?.learningType === learningTypes.frontal" color="primary">למידה
                         פרונטלית</mat-chip-option>
                 </mat-chip-listbox>
             </div>
@@ -61,7 +60,7 @@
             </div>
             <button mat-raised-button type="submit" color="primary" (click)="save()">
                 שמירה
-            <mat-icon>save</mat-icon>
+                <mat-icon>save</mat-icon>
             </button>
         </form>
     </div>
